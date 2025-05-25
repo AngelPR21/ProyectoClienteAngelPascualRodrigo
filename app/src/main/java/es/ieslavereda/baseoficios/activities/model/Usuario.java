@@ -49,7 +49,7 @@ public class Usuario implements Serializable {
         return idOficio;
     }
 
-    public void setIdOficio(int Oficio_idOficio) {
-        Oficio_idOficio = Oficio_idOficio;
+    public void setIdOficio(int idOficio) {
+        idOficio =idOficio;
     }
 }
