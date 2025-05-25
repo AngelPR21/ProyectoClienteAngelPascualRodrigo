@@ -27,13 +27,9 @@ import es.ieslavereda.baseoficios.base.CallInterface;
 
 public class MainActivity extends BaseActivity implements CallInterface<List<Usuario>>, View.OnClickListener {
 
-
-    private RecyclerView recycled;
-
-    private FloatingActionButton anyadir;
-
     private List<Usuario> usuarios;
-
+    private RecyclerView recycled;
+    private FloatingActionButton anyadir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +95,8 @@ public class MainActivity extends BaseActivity implements CallInterface<List<Usu
 
         // Ejecutamos una llamada para obtener datos de la API
         executeCall(this);
+
     }
-
-
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
