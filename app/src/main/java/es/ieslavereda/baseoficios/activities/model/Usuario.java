@@ -48,8 +48,8 @@ public class Usuario implements Serializable {
     public int getOficioIdOficio() {
         return idOficio;
     }
-
-    public void setIdOficio(int idOficio) {
-        idOficio =idOficio;
+    
+     public void setIdOficio(int idOficio1) {
+        idOficio =idOficio1;
     }
 }
