@@ -104,7 +104,6 @@ public class MainActivity extends BaseActivity implements CallInterface<List<Usu
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     Intent data = result.getData();
 
-
                     String nombre = data.getStringExtra("nombre");
                     String apellido = data.getStringExtra("apellido");
                     int oficio = data.getIntExtra("oficio", 0);
@@ -114,7 +113,8 @@ public class MainActivity extends BaseActivity implements CallInterface<List<Usu
                         for (int i = 0; i < usuarios.size(); i++) {
                             if (usuarios.get(i).getIdUsuario() == userId) {
                                 usuarios.set(i, new Usuario(userId, nombre, apellido, oficio));
-                                recycled.getAdapter().notifyItemChanged(i); // Notificamos el cambio
+                                // Puedes comentar esta línea si quieres refrescar toda la lista después
+                                // recycled.getAdapter().notifyItemChanged(i);
                                 break;
                             }
                         }
@@ -123,16 +123,20 @@ public class MainActivity extends BaseActivity implements CallInterface<List<Usu
                     } else {
                         Usuario nuevoUsuario = new Usuario(nombre, apellido, oficio);
                         usuarios.add(nuevoUsuario);
-                        recycled.getAdapter().notifyItemInserted(usuarios.size() - 1);
-                        Toast.makeText(MainActivity.this, "Usuario añadido: " + nombre+ " "+ apellido, Toast.LENGTH_SHORT).show();
+                        // Puedes comentar esta línea si quieres refrescar toda la lista después
+                        // recycled.getAdapter().notifyItemInserted(usuarios.size() - 1);
+                        Toast.makeText(MainActivity.this, "Usuario añadido: " + nombre + " " + apellido, Toast.LENGTH_SHORT).show();
                     }
 
+                    // REFRESCAMOS LA LISTA DESDE EL SERVIDOR
+                    executeCall(this);
 
-                } else if (result.getResultCode()==RESULT_CANCELED){
+                } else if (result.getResultCode() == RESULT_CANCELED) {
                     Toast.makeText(MainActivity.this, "Cancelado", Toast.LENGTH_SHORT).show();
                 }
 
             });
+
 
 
 
@@ -147,6 +151,7 @@ public class MainActivity extends BaseActivity implements CallInterface<List<Usu
         recycled.setLayoutManager(new LinearLayoutManager(this));
         usuarios = data;
         recycled.setAdapter(new AdaptadorRV(this, usuarios, this));
+
     }
 
     @Override

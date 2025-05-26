@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import es.ieslavereda.baseoficios.API.Connector;
 import es.ieslavereda.baseoficios.R;
 import es.ieslavereda.baseoficios.AdaptadorRV;
-import es.ieslavereda.baseoficios.activities.model.OficioImage;
+import es.ieslavereda.baseoficios.activities.model.DatosOficio;
 import es.ieslavereda.baseoficios.activities.model.Usuario;
 import es.ieslavereda.baseoficios.base.BaseActivity;
 import es.ieslavereda.baseoficios.base.CallInterface;
@@ -44,7 +44,7 @@ public class InfoActivity extends BaseActivity{
         apellidoEdit = findViewById(R.id.apellidoEdit);
         oficioSpinner = findViewById(R.id.oficioSpinner);
 
-        oficioSpinner.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,OficioImage.values()));
+        oficioSpinner.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,DatosOficio.values()));
 
 
 
@@ -52,7 +52,7 @@ public class InfoActivity extends BaseActivity{
             guardar.setText("Actualizar");
             int idOficio = getIntent().getExtras().getInt("oficioId");
 
-            OficioImage imagen = AdaptadorRV.getImagen(idOficio);
+            DatosOficio imagen = AdaptadorRV.getImagen(idOficio);
             String url = "http://my-web.joaalsai.com/images/" + imagen.getImagen();
             Picasso.get().load(url).into(imageInfo);
 
@@ -61,7 +61,7 @@ public class InfoActivity extends BaseActivity{
             apellidoEdit.setText(getIntent().getExtras().getString("apellido"));
 
             int i = 0;
-            for (OficioImage im : OficioImage.values()){
+            for (DatosOficio im : DatosOficio.values()){
                 if (im.getId() == idOficio){
                     oficioSpinner.setSelection(i);
                 }
@@ -81,7 +81,9 @@ public class InfoActivity extends BaseActivity{
                     @Override
                     public Usuario doInBackground() throws Exception {
 
-                        return Connector.getConector().put(Usuario.class,u,"/apiProyecto/usuarios/");
+                        String url = "/apiProyecto/usuarios/" + u.getIdUsuario();
+                        return Connector.getConector().put(Usuario.class, u, url);
+
                     }
 
                     @Override
@@ -141,7 +143,7 @@ public class InfoActivity extends BaseActivity{
         oficioSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                OficioImage seleccionado = (OficioImage) oficioSpinner.getItemAtPosition(i);
+                DatosOficio seleccionado = (DatosOficio) oficioSpinner.getItemAtPosition(i);
                 String url = "http://my-web.joaalsai.com/images/" + seleccionado.getImagen();
                 Picasso.get().load(url).into(imageInfo);
 

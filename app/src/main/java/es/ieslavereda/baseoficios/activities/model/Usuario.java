@@ -2,6 +2,7 @@ package es.ieslavereda.baseoficios.activities.model;
 
 import java.io.Serializable;
 
+//Clase que muestra los datos de los usuarios
 public class Usuario implements Serializable {
     private int idUsuario;
     private String nombre;
@@ -13,13 +14,15 @@ public class Usuario implements Serializable {
         this.apellidos = apellidos;
         this.idOficio = idOficio;
     }
-
+    //Constructor del Usuario
     public Usuario(int idUsuario, String nombre, String apellidos, int idOficio) {
         this.idUsuario = idUsuario;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.idOficio = idOficio;
     }
+
+    //Setters y Getters del Usuario
 
     public int getIdUsuario() {
         return idUsuario;
@@ -48,8 +51,5 @@ public class Usuario implements Serializable {
     public int getOficioIdOficio() {
         return idOficio;
     }
-    
-     public void setIdOficio(int idOficio1) {
-        idOficio =idOficio1;
-    }
+
 }

@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import es.ieslavereda.baseoficios.activities.model.OficioImage;
+import es.ieslavereda.baseoficios.activities.model.DatosOficio;
 import es.ieslavereda.baseoficios.activities.model.Usuario;
 public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
 
@@ -32,9 +32,9 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
     }
 
 
-    public static OficioImage getImagen(int id){
+    public static DatosOficio getImagen(int id){
 
-        for (OficioImage im : OficioImage.values()){
+        for (DatosOficio im : DatosOficio.values()){
             if (id == im.getId()){
                 return im;
             }
@@ -53,20 +53,28 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
-
         Usuario usuario = usuarios.get(position);
 
-        OficioImage imagen = getImagen(usuario.getOficioIdOficio());
+        // Obtenemos el DatosOficio usando getById que no devuelve null
+        DatosOficio oficio = DatosOficio.getById(usuario.getOficioIdOficio());
 
-        String url = "http://my-web.joaalsai.com/images/" + imagen.getImagen();
-        Picasso.get().load(url).into(holder.foto);
-        holder.oficio.setText(imagen.getNombre());
+        // Construimos la URL completa de la imagen
+        String urlImagen = "http://my-web.joaalsai.com/images/" + oficio.getImagen();
+
+        // Cargamos la imagen con Picasso, poniendo una imagen por defecto en caso de error o placeholder
+        Picasso.get()
+                .load(urlImagen)
+                .into(holder.foto);
+
+        // Seteamos texto
+        holder.oficio.setText(oficio.getNombre());
         holder.nombre.setText(usuario.getNombre());
         holder.apellido.setText(usuario.getApellidos());
+
         holder.setUsuario(usuario);
         holder.itemView.setOnClickListener(onClickListener);
     }
+
 
 
 
