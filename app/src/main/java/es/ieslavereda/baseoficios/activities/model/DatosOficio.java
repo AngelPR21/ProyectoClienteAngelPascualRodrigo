@@ -51,8 +51,8 @@ public enum DatosOficio {
         for (DatosOficio o : values()) {
             if (o.getId() == id) return o;
         }
-        // Devuelve un oficio por defecto, que tengas definido
-        return null;  // O el que uses para "desconocido"
+
+        return null;
     }
 
 }

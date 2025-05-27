@@ -16,6 +16,12 @@ import java.util.List;
 
 import es.ieslavereda.baseoficios.activities.model.DatosOficio;
 import es.ieslavereda.baseoficios.activities.model.Usuario;
+
+
+/*
+ * Adaptador para mostrar una lista de usuarios en un RecyclerView.
+ * Muestra el nombre, apellido, oficio e imagen asociada al oficio.
+ */
 public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
 
     private List<Usuario> usuarios;
@@ -23,6 +29,13 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
     private LayoutInflater inflater;
     private View.OnClickListener onClickListener;
 
+    /*
+     * Constructor del adaptador.
+     *
+     * @param context Contexto de la aplicación o actividad.
+     * @param usuarios Lista de usuarios a mostrar.
+     * @param onClickListener Listener para manejar clicks en los ítems.
+     */
     public AdaptadorRV(Context context, List<Usuario> usuarios, View.OnClickListener onClickListener) {
         this.context = context;
         this.usuarios = usuarios;
@@ -31,7 +44,7 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
 
     }
 
-
+    //Busca y devuelve el objeto DatosOficio que corresponde con el id proporcionado.
     public static DatosOficio getImagen(int id){
 
         for (DatosOficio im : DatosOficio.values()){
@@ -42,7 +55,7 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
         return null;
     }
 
-
+    //Crea un nuevo ViewHolder y asigna el layout para cada ítem del RecyclerView.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,22 +64,24 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    //Asigna los datos del usuario en la posición dada al ViewHolder.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        //OBtiene la posicion del usuario en la lista
         Usuario usuario = usuarios.get(position);
 
-        // Obtenemos el DatosOficio usando getById que no devuelve null
+        // Obtenemos el DatosOficio usando getById
         DatosOficio oficio = DatosOficio.getById(usuario.getOficioIdOficio());
 
         // Construimos la URL completa de la imagen
         String urlImagen = "http://my-web.joaalsai.com/images/" + oficio.getImagen();
 
-        // Cargamos la imagen con Picasso, poniendo una imagen por defecto en caso de error o placeholder
+        // Cargamos la imagen con Picasso
         Picasso.get()
                 .load(urlImagen)
                 .into(holder.foto);
 
-        // Seteamos texto
+        // Seteamos textos
         holder.oficio.setText(oficio.getNombre());
         holder.nombre.setText(usuario.getNombre());
         holder.apellido.setText(usuario.getApellidos());
@@ -77,12 +92,13 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
 
 
 
-
+    //Devuelve el número total de usuarios en la lista.
     @Override
     public int getItemCount() {
         return usuarios != null ? usuarios.size() : 0;
     }
 
+    //Clase interna que representa el ViewHolder para cada ítem del RecyclerView.
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView nombre, apellido;
@@ -90,6 +106,7 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
         private Usuario usuario;
         private ImageView foto;
 
+        //Constructor del ViewHolder
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -100,7 +117,7 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
 
 
         }
-
+        //Establece el usuario asociado a este ViewHolder.
         public void setUsuario(Usuario usuario){
             this.usuario = usuario;
         }
