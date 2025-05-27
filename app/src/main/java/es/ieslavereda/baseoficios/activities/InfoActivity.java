@@ -23,6 +23,10 @@ import es.ieslavereda.baseoficios.activities.model.Usuario;
 import es.ieslavereda.baseoficios.base.BaseActivity;
 import es.ieslavereda.baseoficios.base.CallInterface;
 
+/*
+ * Actividad que permite crear o editar un usuario
+ * Tiene campos para nombre, apellidos y selección de oficio.
+ */
 public class InfoActivity extends BaseActivity{
 
     private ImageView imageInfo;
@@ -44,22 +48,26 @@ public class InfoActivity extends BaseActivity{
         apellidoEdit = findViewById(R.id.apellidoEdit);
         oficioSpinner = findViewById(R.id.oficioSpinner);
 
+
+        // Se establece el adaptador del Spinner con los oficios disponibles
         oficioSpinner.setAdapter(new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,DatosOficio.values()));
 
 
-
+        // Si se pasan datos por Intent, actualizamos
         if (getIntent().hasExtra("oficioId")){
             guardar.setText("Actualizar");
             int idOficio = getIntent().getExtras().getInt("oficioId");
 
+            // Carga la imagen correspondiente al oficio
             DatosOficio imagen = AdaptadorRV.getImagen(idOficio);
             String url = "http://my-web.joaalsai.com/images/" + imagen.getImagen();
             Picasso.get().load(url).into(imageInfo);
 
-
+            // Rellena campos con datos del usuario
             nombreEdit.setText(getIntent().getExtras().getString("nombre"));
             apellidoEdit.setText(getIntent().getExtras().getString("apellido"));
 
+            // Selecciona el oficio del usuairo actual
             int i = 0;
             for (DatosOficio im : DatosOficio.values()){
                 if (im.getId() == idOficio){
@@ -68,8 +76,15 @@ public class InfoActivity extends BaseActivity{
                 i++;
             }
 
+            // Listener para actualizar usuario
             guardar.setOnClickListener(v -> {
+                String nombre = nombreEdit.getText().toString().trim();
+                String apellido = apellidoEdit.getText().toString().trim();
 
+                if (nombre.isEmpty() && apellido.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Los campos nombre y apellido no pueden estar vacíos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 executeCall(new CallInterface<Usuario>(){
                     Usuario u = new Usuario(
                             getIntent().getExtras().getInt("userId"),
@@ -105,9 +120,18 @@ public class InfoActivity extends BaseActivity{
             });
 
         } else {
+            // Modo crear nuevo usuario
             guardar.setText("Crear");
-            guardar.setOnClickListener(v -> {
 
+            guardar.setOnClickListener(v -> {
+                String nombre = nombreEdit.getText().toString().trim();
+                String apellido = apellidoEdit.getText().toString().trim();
+
+                //En caso de que este vacio no se podra crear ni actualizar
+                if (nombre.isEmpty() && apellido.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Los campos nombre y apellido no pueden estar vacíos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 executeCall(new CallInterface<Usuario>() {
                     @Override
                     public Usuario doInBackground() throws Exception {
@@ -133,13 +157,15 @@ public class InfoActivity extends BaseActivity{
             });
         }
 
-
+        //Cierra la actividad si el usuario pulsa Cancelar
         cancelar.setOnClickListener( o -> {
             Intent intent = new Intent();
             setResult(RESULT_CANCELED, intent);
             finish();
         });
 
+
+        //Listener para mostrar la imagen del oficio seleccionado en el Spinner.
         oficioSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
