@@ -75,12 +75,12 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
 
         // Construimos la URL completa de la imagen
         String urlImagen = "http://my-web.joaalsai.com/images/" + oficio.getImagen();
-
+        //String urlImagen = URL_IMAGE_BASE + oficio.getImagen();
+        
         // Cargamos la imagen con Picasso
-        Picasso.get()
-                .load(urlImagen)
-                .into(holder.foto);
-
+        Picasso.get().load(urlImagen).into(holder.foto);
+        //ImageDownloader.downloadImage(urlImagen,holder.foto);
+        
         // Seteamos textos
         holder.oficio.setText(oficio.getNombre());
         holder.nombre.setText(usuario.getNombre());
