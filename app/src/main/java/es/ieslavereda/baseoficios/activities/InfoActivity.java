@@ -1,5 +1,7 @@
 package es.ieslavereda.baseoficios.activities;
 
+import static es.ieslavereda.baseoficios.base.Parameters.URL_IMAGE_BASE;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +24,7 @@ import es.ieslavereda.baseoficios.activities.model.DatosOficio;
 import es.ieslavereda.baseoficios.activities.model.Usuario;
 import es.ieslavereda.baseoficios.base.BaseActivity;
 import es.ieslavereda.baseoficios.base.CallInterface;
+import es.ieslavereda.baseoficios.base.ImageDownloader;
 
 /*
  * Actividad que permite crear o editar un usuario
@@ -60,8 +63,9 @@ public class InfoActivity extends BaseActivity{
 
             // Carga la imagen correspondiente al oficio
             DatosOficio imagen = AdaptadorRV.getImagen(idOficio);
-            String url = "http://my-web.joaalsai.com/images/" + imagen.getImagen();
-            Picasso.get().load(url).into(imageInfo);
+            String url = URL_IMAGE_BASE + imagen.getImagen();
+            ImageDownloader.downloadImage(url,R.drawable.ic_launcher_background,imageInfo);
+
 
             // Rellena campos con datos del usuario
             nombreEdit.setText(getIntent().getExtras().getString("nombre"));
@@ -170,10 +174,8 @@ public class InfoActivity extends BaseActivity{
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 DatosOficio seleccionado = (DatosOficio) oficioSpinner.getItemAtPosition(i);
-                String url = "http://my-web.joaalsai.com/images/" + seleccionado.getImagen();
-                //String url = URL_IMAGE_BASE + seleccionado.getImagen();
-                Picasso.get().load(url).into(imageInfo);
-                //ImageDownloader.downloadImage(url,imageInfo);
+                String url = URL_IMAGE_BASE + seleccionado.getImagen();
+                ImageDownloader.downloadImage(url,R.drawable.ic_launcher_background,imageInfo);
 
             }
 

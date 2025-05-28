@@ -21,7 +21,7 @@ public class ImageDownloader {
     public static void downloadImage(String url, ImageView imageView){
         Picasso.get().load(url).into(imageView);
     }
-    public static void downloadImage(String url, Drawable errorDrawable, ImageView imageView){
+    public static void downloadImage(String url, int errorDrawable, ImageView imageView){
         Picasso.get().load(url).error(errorDrawable).into(imageView);
     }
 

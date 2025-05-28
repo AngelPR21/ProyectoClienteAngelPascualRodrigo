@@ -1,5 +1,7 @@
 package es.ieslavereda.baseoficios;
 
+import static es.ieslavereda.baseoficios.base.Parameters.URL_IMAGE_BASE;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import es.ieslavereda.baseoficios.activities.model.DatosOficio;
 import es.ieslavereda.baseoficios.activities.model.Usuario;
+import es.ieslavereda.baseoficios.base.ImageDownloader;
 
 
 /*
@@ -74,12 +77,10 @@ public class AdaptadorRV extends RecyclerView.Adapter<AdaptadorRV.ViewHolder> {
         DatosOficio oficio = DatosOficio.getById(usuario.getOficioIdOficio());
 
         // Construimos la URL completa de la imagen
-        String urlImagen = "http://my-web.joaalsai.com/images/" + oficio.getImagen();
-        //String urlImagen = URL_IMAGE_BASE + oficio.getImagen();
+        String urlImagen = URL_IMAGE_BASE + oficio.getImagen();
         
         // Cargamos la imagen con Picasso
-        Picasso.get().load(urlImagen).into(holder.foto);
-        //ImageDownloader.downloadImage(urlImagen,holder.foto);
+        ImageDownloader.downloadImage(urlImagen,R.drawable.ic_launcher_background,holder.foto);
         
         // Seteamos textos
         holder.oficio.setText(oficio.getNombre());
