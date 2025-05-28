@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 
-import com.squareup.picasso.Picasso;
 
 import es.ieslavereda.baseoficios.API.Connector;
 import es.ieslavereda.baseoficios.R;
@@ -58,7 +57,7 @@ public class InfoActivity extends BaseActivity{
 
         // Si se pasan datos por Intent, actualizamos
         if (getIntent().hasExtra("oficioId")){
-            guardar.setText("Actualizar");
+            guardar.setText("Update");
             int idOficio = getIntent().getExtras().getInt("oficioId");
 
             // Carga la imagen correspondiente al oficio
@@ -73,8 +72,8 @@ public class InfoActivity extends BaseActivity{
 
             // Selecciona el oficio del usuairo actual
             int i = 0;
-            for (DatosOficio im : DatosOficio.values()){
-                if (im.getId() == idOficio){
+            for (DatosOficio image : DatosOficio.values()){
+                if (image.getId() == idOficio){
                     oficioSpinner.setSelection(i);
                 }
                 i++;
@@ -90,7 +89,7 @@ public class InfoActivity extends BaseActivity{
                     return;
                 }
                 executeCall(new CallInterface<Usuario>(){
-                    Usuario u = new Usuario(
+                    Usuario usuario = new Usuario(
                             getIntent().getExtras().getInt("userId"),
                             nombreEdit.getText().toString(),
                             apellidoEdit.getText().toString(),
@@ -100,8 +99,8 @@ public class InfoActivity extends BaseActivity{
                     @Override
                     public Usuario doInBackground() throws Exception {
 
-                        String url = "/apiProyecto/usuarios/" + u.getIdUsuario();
-                        return Connector.getConector().put(Usuario.class, u, url);
+                        String url = "/apiProyecto/usuarios/" + usuario.getIdUsuario();
+                        return Connector.getConector().put(Usuario.class, usuario, url);
 
                     }
 
@@ -125,7 +124,7 @@ public class InfoActivity extends BaseActivity{
 
         } else {
             // Modo crear nuevo usuario
-            guardar.setText("Crear");
+            guardar.setText("Create");
 
             guardar.setOnClickListener(v -> {
                 String nombre = nombreEdit.getText().toString().trim();
@@ -157,7 +156,6 @@ public class InfoActivity extends BaseActivity{
                         }
                     }
                 });
-
             });
         }
 

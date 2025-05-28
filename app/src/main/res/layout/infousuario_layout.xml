@@ -37,6 +37,7 @@
         android:ems="10"
         android:hint="Nombre"
         android:inputType="text"
+        android:textColorHint="#813EF4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +50,7 @@
         android:ems="10"
         android:hint="Apellidos"
         android:inputType="text"
+        android:textColorHint="#813EF4"
         app:layout_constraintEnd_toEndOf="@+id/nombreEdit"
         app:layout_constraintStart_toStartOf="@+id/nombreEdit"
         app:layout_constraintTop_toBottomOf="@+id/nombreEdit" />
@@ -58,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="Guardar"
+        android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -69,9 +71,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="Cancelar"
+        android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="@+id/guardar"
         app:layout_constraintEnd_toStartOf="@+id/guardar"
         app:layout_constraintTop_toTopOf="@+id/guardar" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:background="#813EF4"
+        android:gravity="center|left"
+        android:paddingLeft="8dp"
+        android:paddingTop="5dp"
+        android:text="MyReciclerViewREST"
+        android:textColor="#FBFBFB"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
