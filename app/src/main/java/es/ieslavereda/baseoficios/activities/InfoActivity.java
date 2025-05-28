@@ -171,7 +171,9 @@ public class InfoActivity extends BaseActivity{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 DatosOficio seleccionado = (DatosOficio) oficioSpinner.getItemAtPosition(i);
                 String url = "http://my-web.joaalsai.com/images/" + seleccionado.getImagen();
+                //String url = URL_IMAGE_BASE + seleccionado.getImagen();
                 Picasso.get().load(url).into(imageInfo);
+                //ImageDownloader.downloadImage(url,imageInfo);
 
             }
 
