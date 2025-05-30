@@ -17,7 +17,7 @@ public class Oficio implements Serializable {
         this.image = image;
     }
 
-    //Setters y Getters del Oficio
+    //Setters y Getters del Oficio.
     public int getIdOficio() {
         return idOficio;
     }
